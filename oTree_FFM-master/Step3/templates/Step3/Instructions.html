@@ -1,0 +1,38 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Stufe 3: Die Wahl zwischen verschiedenen Snacks
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+-->
+{% if treatment == "control" %}
+In der dritten Stufe des heutigen Experiments müssen Sie sich erneut insgesamt 100 Mal zwischen zwei verschiedenen Gütern entscheiden. Ihre Auswahl treffen Sie dabei, indem Sie auf das Foto des jeweiligen Gutes klicken und es damit farbig markieren. Um Ihre Entscheidung final abzugeben klicken Sie dann noch auf „Weiter“.
+<br />
+<br />
+Sollte diese Stufe des Experiments zur Auszahlung ausgewählt werden, wird eine Ihrer 100 Entscheidungen zufällig ausgelost und Sie erhalten am Ende des Experiments das in dieser Entscheidungssituation von Ihnen ausgewählte Gut.
+{% endif %}
+
+
+
+{% if treatment == "treatment_1" or treatment == "treatment_2" %}
+In der dritten Stufe des heutigen Experiments müssen Sie sich erneut insgesamt 100 Mal zwischen zwei verschiedenen Gütern entscheiden. Ihre Auswahl treffen Sie dabei, indem Sie auf das Foto des jeweiligen Gutes klicken und es damit farbig markieren. Um Ihre Entscheidung final abzugeben klicken Sie dann noch auf „Weiter“. Im Gegensatz zu Stufe 2 ist in dieser Stufe keines der Güter vorab ausgewählt.
+<br />
+<br />
+Sollte diese Stufe des Experiments zur Auszahlung ausgewählt werden, wird eine Ihrer 100 Entscheidungen zufällig ausgelost und Sie erhalten am Ende des Experiments das in dieser Entscheidungssituation von Ihnen ausgewählte Gut.
+{% endif %}
+<br />
+<br />
+
+    {% next_button %}
+
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Stufe 4: Ende und Auszahlung
+{% endblock %}
+
+{% block content %}
+
+Die Basis-Vergütung für pünktliches Erscheinen beträgt 10 €. <br />
+Für Sie wird nun aus einer zufälligen Stufe dieses Experiments ein zufälliger Snack gezogen. <br />
+
+
+<br />
+<input type="hidden" name="p_label" value="{{p_label}}" id="p_label"/>
+<input type="hidden" name="rand_snack" value="{{random_snack}}" id="rand_snack"/>
+<input type="hidden" name="rand_price" value="{{random_price}}" id="rand_price"/>
+
+{% if step = 1 %}
+  {% if participant_WTP >= random_price %}
+      <input type="hidden" name="payout1" value="{{random_snack}}" id="payout1"/>
+      <input type="hidden" name="payout2" value="{{payoff_with_snack}}" id="payout2"/>
+  {% else %}
+    <input type="hidden" name="payout1" value="-" id="payout1"/>
+    <input type="hidden" name="payout2" value="{{payoff_without_snack}}" id="payout2"/>
+  {% endif %}
+
+  {% if participant_WTP2 >= random_price %}
+    <input type="hidden" name="payout3" value="{{random_snack2}}" id="payout3"/>
+    <input type="hidden" name="payout4" value="{{payoff_with_snack}}" id="payout4"/>
+  {% else %}
+    <input type="hidden" name="payout3" value="-" id="payout3"/>
+    <input type="hidden" name="payout4" value="{{payoff_without_snack}}" id="payout4"/>
+  {% endif %}
+  {% if participant_WTP3 >= random_price %}
+    <input type="hidden" name="payout5" value="{{random_snack3}}" id="payout5"/>
+    <input type="hidden" name="payout6" value="{{payoff_with_snack}}" id="payout6"/>
+  {% else %}
+    <input type="hidden" name="payout5" value="-" id="payout5"/>
+    <input type="hidden" name="payout6" value="{{payoff_without_snack}}" id="payout6"/>
+  {% endif %}
+  {% if participant_WTP4 >= random_price %}
+    <input type="hidden" name="payout7" value="{{random_snack4}}" id="payout7"/>
+    <input type="hidden" name="payout8" value="{{payoff_with_snack}}" id="payout8"/>
+  {% else %}
+    <input type="hidden" name="payout7" value="-" id="payout7"/>
+    <input type="hidden" name="payout8" value="{{payoff_without_snack}}" id="payout8"/>
+  {% endif %}
+  {% if participant_WTP5 >= random_price %}
+    <input type="hidden" name="payout9" value="{{random_snack5}}" id="payout9"/>
+    <input type="hidden" name="payout10" value="{{payoff_with_snack}}" id="payout10"/>
+  {% else %}
+    <input type="hidden" name="payout9" value="-" id="payout9"/>
+    <input type="hidden" name="payout10" value="{{payoff_without_snack}}" id="payout10"/>
+  {% endif %}
+{% endif %}
+
+{% if step = 2 %}
+  <input type="hidden" name="payout1" value="{{random_snack}}" id="payout1"/>
+  <input type="hidden" name="payout2" value="{{payoff_with_snack}}" id="payout2"/>
+  <input type="hidden" name="payout3" value="{{random_snack2}}" id="payout3"/>
+  <input type="hidden" name="payout4" value="{{payoff_with_snack}}" id="payout4"/>
+  <input type="hidden" name="payout5" value="{{random_snack3}}" id="payout5"/>
+  <input type="hidden" name="payout6" value="{{payoff_with_snack}}" id="payout6"/>
+  <input type="hidden" name="payout7" value="{{random_snack4}}" id="payout7"/>
+  <input type="hidden" name="payout8" value="{{payoff_with_snack}}" id="payout8"/>
+  <input type="hidden" name="payout9" value="{{random_snack5}}" id="payout9"/>
+  <input type="hidden" name="payout10" value="{{payoff_with_snack}}" id="payout10"/>
+{% endif %}
+
+{% if step = 3 %}
+  <input type="hidden" name="payout1" value="{{random_snack}}" id="payout1"/>
+  <input type="hidden" name="payout2" value="{{payoff_with_snack}}" id="payout2"/>
+  <input type="hidden" name="payout3" value="{{random_snack2}}" id="payout3"/>
+  <input type="hidden" name="payout4" value="{{payoff_with_snack}}" id="payout4"/>
+  <input type="hidden" name="payout5" value="{{random_snack3}}" id="payout5"/>
+  <input type="hidden" name="payout6" value="{{payoff_with_snack}}" id="payout6"/>
+  <input type="hidden" name="payout7" value="{{random_snack4}}" id="payout7"/>
+  <input type="hidden" name="payout8" value="{{payoff_with_snack}}" id="payout8"/>
+  <input type="hidden" name="payout9" value="{{random_snack5}}" id="payout9"/>
+  <input type="hidden" name="payout10" value="{{payoff_with_snack}}" id="payout10"/>
+{% endif %}
+
+{% if step = 4 %}
+  {% if participant_WTP >= random_price %}
+      <input type="hidden" name="payout1" value="{{random_snack}}" id="payout1"/>
+      <input type="hidden" name="payout2" value="{{payoff_with_snack}}" id="payout2"/>
+  {% else %}
+    <input type="hidden" name="payout1" value="-" id="payout1"/>
+    <input type="hidden" name="payout2" value="{{payoff_without_snack}}" id="payout2"/>
+  {% endif %}
+
+  {% if participant_WTP2 >= random_price %}
+    <input type="hidden" name="payout3" value="{{random_snack2}}" id="payout3"/>
+    <input type="hidden" name="payout4" value="{{payoff_with_snack}}" id="payout4"/>
+  {% else %}
+    <input type="hidden" name="payout3" value="-" id="payout3"/>
+    <input type="hidden" name="payout4" value="{{payoff_without_snack}}" id="payout4"/>
+  {% endif %}
+  {% if participant_WTP3 >= random_price %}
+    <input type="hidden" name="payout5" value="{{random_snack3}}" id="payout5"/>
+    <input type="hidden" name="payout6" value="{{payoff_with_snack}}" id="payout6"/>
+  {% else %}
+    <input type="hidden" name="payout5" value="-" id="payout5"/>
+    <input type="hidden" name="payout6" value="{{payoff_without_snack}}" id="payout6"/>
+  {% endif %}
+  {% if participant_WTP4 >= random_price %}
+    <input type="hidden" name="payout7" value="{{random_snack4}}" id="payout7"/>
+    <input type="hidden" name="payout8" value="{{payoff_with_snack}}" id="payout8"/>
+  {% else %}
+    <input type="hidden" name="payout7" value="-" id="payout7"/>
+    <input type="hidden" name="payout8" value="{{payoff_without_snack}}" id="payout8"/>
+  {% endif %}
+  {% if participant_WTP5 >= random_price %}
+    <input type="hidden" name="payout9" value="{{random_snack5}}" id="payout9"/>
+    <input type="hidden" name="payout10" value="{{payoff_with_snack}}" id="payout10"/>
+  {% else %}
+    <input type="hidden" name="payout9" value="-" id="payout9"/>
+    <input type="hidden" name="payout10" value="{{payoff_without_snack}}" id="payout10"/>
+  {% endif %}
+{% endif %}
+<br />
+<br />
+<br />
+<b>Wichtig:</b> Bitte klicken Sie weiter, um das Experiment zu beenden.<br />
+Wenn alle Teilnehmer das Experiment beendet haben, ruft der Experimentator Sie auf.<br />
+<br />
+    {% next_button %}
+{% endblock %}

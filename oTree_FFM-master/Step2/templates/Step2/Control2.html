@@ -1,0 +1,31 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Stufe 2: Kontrollfragen
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+-->
+
+.... Kontrollfragen here ....
+<br />
+<br />
+{% formfield player.control_4 %}
+{% formfield player.control_5 %}
+{% formfield player.control_6 %}
+
+<br />
+<br />
+
+    {% next_button %}
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Stufe 2: Die Wahl zwischen verschiedenen Snacks
+{% endblock %}
+
+{% block content %}
+
+{% if treatment == "control" %}
+In der zweiten Stufe des heutigen Experiments zeigen wir Ihnen nun mehrere der Güter aus Stufe 1. Ihre Aufgabe ist es, sich für jeweils eines der zwei präsentierten Güter zu entscheiden. Insgesamt zeigen wir Ihnen 100 Paare von Gütern. Ihre Auswahl treffen Sie dabei, indem Sie auf das Foto des jeweiligen Gutes klicken und es damit farbig markieren. Um Ihre Entscheidung final abzugeben klicken Sie dann noch auf „Weiter“.
+<br />
+<br />
+Sollte diese Stufe des Experiments zur Auszahlung ausgewählt werden, wird eine Ihrer 100 Entscheidungen zufällig ausgelost und Sie erhalten am Ende des Experiments das in dieser Entscheidungssituation von Ihnen ausgewählte Gut.
+
+{% endif %}
+{% if treatment == "treatment_1" or treatment == "treatment_2" %}
+In der zweiten Stufe des heutigen Experiments zeigen wir Ihnen nun mehrere der Güter aus Stufe 1. Ihre Aufgabe ist es, sich für jeweils eines der zwei präsentierten Güter zu entscheiden. Insgesamt zeigen wir Ihnen 100 Paare von Gütern. Eines der beiden Güter ist dabei jeweils bereits vorab ausgewählt. Wenn Sie diese Auswahl annehmen möchten, klicken Sie einfach direkt auf „Weiter“. Sie können die Auswahl aber auch ändern, indem Sie auf das Foto des von Ihnen bevorzugten Gutes klicken und es damit farbig markieren. Um Ihre Entscheidung final abzugeben klicken Sie dann noch auf „Weiter“.
+<br />
+<br />
+Sollte diese Stufe des Experiments zur Auszahlung ausgewählt werden, wird eine Ihrer 100 Entscheidungen zufällig ausgelost und Sie erhalten am Ende des Experiments das in dieser Entscheidungssituation von Ihnen ausgewählte Gut.
+
+{% endif %}
+
+
+<br />
+<br />
+
+
+    {% next_button %}
+{% endblock %}

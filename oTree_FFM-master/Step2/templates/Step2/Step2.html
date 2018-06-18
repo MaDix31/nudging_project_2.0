@@ -1,0 +1,100 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Stufe 2: Welchen Snack wählen Sie?
+{% endblock %}
+
+{% block styles %}
+<style type="text/css">
+body {
+    background-color: black;
+    color: white;
+}
+
+#content{
+  width:100%;
+  heigth:500px;
+  margin 0 10% 0 10%;
+}
+
+.compare{
+  float:left;
+  width:45%;
+  margin-left:2.5%;
+  margin-right:2.5%;
+}
+
+.pictures{
+  max-width:100%;
+  heigth:auto;
+}
+
+label > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+label > input + img{ /* IMAGE STYLES */
+  cursor:pointer;
+  border:8px solid transparent;
+}
+label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  border:8px solid #0f0;
+}
+
+.nextbutton {
+    text-align: center;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+-->
+
+
+<input type="hidden" name="offer_1" value="{{snack1}}" id="offer_1"/>
+<input type="hidden" name="offer_2" value="{{snack2}}" id="offer_2"/>
+<input type="hidden" name="treatment" value="{{treatment}}" id="treatment"/>
+<input type="hidden" name="default" value="{{default}}" id="default"/>
+
+
+<form>
+<div id="content">
+
+<div class="compare">
+<label for="s1">
+  {{image1 | safe}}
+  <img class="pictures" src="{% static image_path1 %}">
+</label>
+</div>
+
+<div class="compare">
+<label for="s2">
+  {{image2 | safe}}
+  <img class="pictures" src="{% static image_path2 %}">
+</label>
+</div>
+
+</div>
+</form>
+<br />
+Entscheidung {{ decisionno }} von {{ Constants.num_rounds }}
+<br />
+{{ form.errors }}
+<br />
+
+<div>
+  <div class="nextbutton">
+    {% next_button %}
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Über das heutige Experiment
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+-->
+
+Im heutigen Experiment müssen Sie eine Reihe von Entscheidungen über verschiedene Konsumgüter treffen. Das Experiment besteht aus insgesamt vier Stufen. Am Ende des Experiments wird <b>eine</b> Entscheidungssituation aus <b>einer</b> der vier Stufen zufällig ausgewählt. Je nachdem, wie Sie sich in dieser Situation entschieden haben, erhalten Sie dann am Ende des Experiments eine zusätzliche Auszahlung und/oder das entsprechende Gut. Details hierzu erklären wir Ihnen unten.
+<br />
+<br />
+<h3>Stufe 1: Ihre Zahlungsbereitschaft für verschiedene Konsumgüter</h3>
+In der ersten Stufe des heutigen Experiments zeigen wir Ihnen eine Reihe von Konsumgütern. Sie erhalten ein Budget von 5 Euro, das Sie zum Kauf jedes dieser Güter verwenden können. Für jedes der angezeigten Güter geben Sie bitte an, wieviel Sie maximal bereit sind für das Gut zu zahlen. Sie haben dafür jeweils 10 Sekunden Zeit. Sie können Ihre Zahlungsbereitschaft anhand der eingeblendeten Scroll-Bar angeben.
+<br />
+<br />
+<img src="{% static 'Entscheidungsscreen.png' %}"/>
+<br />
+<br />
+Denken Sie daran, dass nur eine Ihrer Entscheidungen am Ende des Experiments für die Auszahlung ausgewählt wird und Sie Ihr Budget daher nicht auf verschiedene Güter aufteilen müssen. Für jede Entscheidung haben Sie ein Budget von 5 Euro zur Verfügung. Sie sollten jede der Entscheidungen so treffen, als sei es die einzig relevante.
+<br />
+<br />
+Diese Stufe des Experiments ist so ausgestaltet, dass es zu Ihrem eigenen Vorteil ist, immer Ihre wahre Zahlungsbereitschaft für jedes Gut anzugeben. Im Folgenden erklären wir Ihnen das Verfahren:
+<br />
+<br />
+Wird eine Entscheidung aus Stufe 1 für Sie zur Auszahlung ausgewählt, wird ein zufälliger Preis zwischen 0 und 5 Euro ausgelost.
+<br />
+<br />
+<li>
+  <b>Fall 1: Der zufällig ausgewählte Preis ist kleiner oder gleich dem Preis, den Sie als Zahlungsbereitschaft angegeben haben.</b><br />
+  In diesem Fall kaufen Sie das entsprechende Gut zum zufällig ausgewählten Preis und erhalten Ihr verbleibendes Budget ausgezahlt.
+</li>
+<br />
+<li>
+  <b>Fall 2: Der zufällig ausgewählte Preis ist größer als der Preis, den Sie als Zahlungsbereitschaft angegeben haben.</b><br />
+  In diesem Fall erhalten Sie Ihr gesamtes Budget von 5 Euro ausgezahlt und kaufen nicht das entsprechende Gut.
+</li>
+<br />
+<br />
+ 
+<h4>Warum Sie immer Ihre wahre Zahlungsbereitschaft angeben sollten:</h4><br />
+Beachten Sie, dass Ihre Zahlungsbereitschaft nicht den Preis des jeweiligen Gutes beeinflusst. Durch die Wahl Ihrer Zahlungsbereitschaft bestimmen Sie nur, ob Sie das Gut zu dem vom Computer zufällig gezogenen Preis kaufen oder nicht. Der Preis, den Sie für das Gut bezahlen, ist also NICHT Ihre Zahlungsbereitschaft sondern die zufällig gezogene Zahl.
+<br />
+<br />
+<li>
+  Indem Sie Ihre Zahlungsbereitschaft niedriger angeben, können Sie den Preis des Gutes also nicht reduzieren. Stattdessen riskieren Sie, das Gut trotz eines für Sie vorteilhaften Preises NICHT zu kaufen.
+</li>
+<br />
+<li>
+  Indem Sie Ihre Zahlungsbereitschaft höher angeben, riskieren Sie, das Gut zu einem höheren Preis zu kaufen, als es Ihnen eigentlich wert ist.
+</li>
+<br />
+Nehmen Sie zum Beispiel an, dass Ihnen ein bestimmtes Gut 2 Euro wert ist. Wenn Sie diese Zahlungsbereitschaft wahrheitsgemäß angeben, erhalten Sie das Gut für jeden zufällig gezogenen Preis zwischen 0 und 2 Euro. Würden Sie eine niedrigere Zahlungsbereitschaft angeben, würde dies nicht den zu zahlenden Preis senken. Stattdessen würden Sie darauf verzichten, das Gut zu Preisen zu kaufen, die niedriger sind als Ihre Zahlungsbereitschaft. Würden Sie eine höhere Zahlungsbereitschaft angeben, riskieren Sie, das Gut zu Preisen zu kaufen, die es Ihnen eigentlich nicht wert ist.
+<br />
+<br />
+Grundsätzlich sind alle Güter in diesem Experiment vorrätig. Sollte jedoch der seltene Fall auftreten, dass das von Ihnen ausgewählte Gut ausnahmsweise nicht mehr verfügbar ist (z.B. weil es zufälligerweise auch für andere Teilnehmer ausgewählt wurde), werden wir eine andere Ihrer Entscheidungen zufällig auswählen und diese dann zur Auszahlung umsetzen.
+
+<br />
+<br />
+<br />
+<br />
+
+    {% next_button %}
+
+{% endblock %}
