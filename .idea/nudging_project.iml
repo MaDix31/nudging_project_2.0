@@ -8,7 +8,7 @@
   <component name="TemplatesService">
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/oTree_FFM-master/BDM/templates" />
+        <option value="$MODULE_DIR$/BDM/templates" />
       </list>
     </option>
   </component>

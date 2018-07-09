@@ -115,7 +115,7 @@ SESSION_CONFIGS = [
      {
          'name': 'Nudge_Experiment',
          'display_name': 'Nudging Experiment',
-         'num_demo_participants': 5,
+         'num_demo_participants': 1,
          'app_sequence': ['BDM', 'Step2', 'Step3', 'BDM2'],
      }
 ]
