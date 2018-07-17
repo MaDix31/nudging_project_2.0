@@ -19,8 +19,13 @@ class Constants(BaseConstants):
     name_in_url = 'Step1'
     players_per_group = None
 
+    # Definiere treatments:
+    treatments = ['control','treat1','treat2']
+
     # Anzahl unterschiedlicher Snack-Bilder, basierend auf Dateien im Snackbilder-Ordner
     num_snacks = len(os.listdir('_static//img_snacks'))
+    # Anzahl an Entscheidungen, die in Step 1 gefällt werden sollen = Anzahl Snacks gesamt
+    num_rounds = num_snacks
 
     # Liste der Snacks, basierend auf .jpg-Dateien im Snackbilder-Ordner
     list_snacks = []
@@ -35,16 +40,10 @@ class Constants(BaseConstants):
     # ist nicht gegeben, dass list_snacks immer gleich geordnet ist, daher:
     list_snacks.sort()
 
-    # Anzahl an Entscheidungen, die in Step 1 gefällt werden sollen = Anzahl Snacks gesamt
-    num_rounds = len(os.listdir('_static//img_snacks'))
-
-
-
 
 class Subsession(BaseSubsession):
     def creating_session(self):
-
-
+        print('in creating_session', self.round_number)
         if self.round_number == 1:          # damit Schleifen nur 1x durchlaufen werden
 
             # initialisiere Index-Liste
@@ -77,15 +76,31 @@ class Subsession(BaseSubsession):
                 if 'WTPs_step_4' not in p.participant.vars:
                     p.participant.vars['WTPs_step_4'] = {}
 
-        # Weise einmalig Teilnehmer abwechselnd einem bestimmten Treatment zu
-        if self.round_number == 1:
-            treatments = itertools.cycle(['control', 'treatment_1', 'treatment_2'])
-            for p in self.get_players():
-                p.participant.vars['treatment'] = next(treatments)
 
-        # Fülle in Datenfeld, welchem Treatment der Teilnehmer zugeordnet ist
-        for p in self.get_players():
-            p.treatment = p.participant.vars['treatment']
+            # Weise einmalig Teilnehmer einem Treatment zu mit stratified randomisation
+            # set seeed !!!! NOCH EINZUFÜGEN
+            num_players = self.session.config['num_demo_participants']
+            num_trios =  num_players // 3 # This gives us the number of trios/stratas in which to randomise the three arms
+            num_rest = num_players % 3 # This gives us the reminder, i.e. either one or two participants for which we randomise individually
+            all_treats = Constants.treatments*num_trios # gives us a list of treatments for all trios/strata/buckets of three
+            print(all_treats)
+            for index in range(1,num_rest+1): # an index running from 1 to 1, or from 1 to 2 depending on the reminder participants
+                treat_rest = Constants.treatments[random.choice([0, 1, 2])] # randomise treatment individually
+                all_treats.append(treat_rest) # append individual treatment to treatment list
+                print(treat_rest)
+                print(all_treats)
+            random.shuffle(all_treats) # shuffle the full list of arms
+            print(all_treats)
+
+            for i,p in enumerate(self.get_players()):
+                if p.round_number == 1:
+                    p.treatment = all_treats[i]
+                else:
+                    p.treatment = p.in_round(1).treatment
+
+            # Fülle in Datenfeld, welchem Treatment der Teilnehmer zugeordnet ist
+            for p in self.get_players():
+                p.participant.vars['treatment'] = p.treatment
 
 
 class Group(BaseGroup):
@@ -105,55 +120,31 @@ class Player(BasePlayer):
         # key: abgefragter Snack
         # value: willingness-to-pay
         if self.slider_value == "":
+
+            # self.participant.vars['num_snacks'] sind indexzahlen, die von 0 bis zu num_snacks-1 läuft,
+            # wobei bei jeder runde immer die erste Indexzahl weggenommen wird, sodass self.participant.vars['num_snacks'][0]
+            # immer das nächste Gut ist. [Constants.list_snacks[self.participant.vars['num_snacks'][0]] gibt somit immer den Namen des nächsten Guts
+            # Dadurch dass es ein dictionary ist, wird der BDM value immer an die Seite des entsprechenden Guts geschrieben
             self.participant.vars['BDM'][Constants.list_snacks[self.participant.vars['num_snacks'][0]]] = '0'
         else:
             self.participant.vars['BDM'][Constants.list_snacks[self.participant.vars['num_snacks'][0]]] = self.slider_value
 
 
     def sort_WTPs(self):
-        '''Differenzen der WTPs minimal halten
-        '''
         # konvertiere BDM-dictionary in Liste von Tupel-Paaren: [(snack, WTP), (snack, WTP),...]
         sorted_BDM_tuples = sorted(self.participant.vars['BDM'].items(), key=itemgetter(1))
+        print(sorted_BDM_tuples)
         # drehe Liste um, damit absteigend nach WTPs geordnet ist
         sorted_BDM_tuples.reverse()
         BDM_length = len(sorted_BDM_tuples)
 
 
-        # initialisiere Liste mit den geringsten WTP-Differenzen (wird in nachfolgender Schleife gefüllt)
-        closest_WTPs = []
-
-
-        for index, element in enumerate(sorted_BDM_tuples):
-        # ermittelt Differenz zwischen höchster WTP und allen anderen WTPs,
-        # geht dann weiter zur zweit-höchsten WTP und ermittelt deren Differenz zu allen niedrigeren WTPs
-        # usw.
-            if index != BDM_length-1:       # wenn nicht letztes Element der Liste
-                i = index + 1
-                while i < BDM_length:
-                    WTP_difference = round(float(element[1])-float(sorted_BDM_tuples[i][1]), 1)
-                    # wenn closest_WTP-Liste noch nicht voll ODER die gerade ermittelte WTP-Differenz niedriger als das Maximum der bereits vorhandenen WTP-Differenzen
-                    if len(closest_WTPs) < 400 or max(closest_WTPs, key=itemgetter(2))[2] > WTP_difference:
-                        next_element = sorted_BDM_tuples[i][0]
-                        i += 1
-                        # füge Triple (Snack1, Snack2, WTP-Differenz zwischen Snack1 und Snack2) zu closest_WTP-Liste hinzu
-                        closest_WTPs.append((element[0], next_element, WTP_difference))
-
-                        # wenn closest_WTP-Liste voll: entferne größte WTP-Differenz
-                        if len(closest_WTPs) > 400:
-                            closest_WTPs.remove(max(closest_WTPs, key=itemgetter(2)))
-                    else:
-                        break
-
-
-        # speichere closest_WTP-Liste global in Teilnehmer-Variablen
-        self.participant.vars['closest_WTPs'] = closest_WTPs
-
-        # Liste mit Snacks aus closest WTPs, um später davon die Pfade zu den Bildern zu bestimmen
+        # Liste mit Snacks, um später davon die Pfade zu den Bildern zu bestimmen
         snacks_to_show = []
         # zufällige Reihenfolge, um dem überproportionalen Erscheinen eines bestimmten Guts entgegenzuwirken
-        random.shuffle(closest_WTPs)
-        for i in closest_WTPs:
+        sorted_BDM_tuples_shuffled = sorted_BDM_tuples.copy()
+        random.shuffle(sorted_BDM_tuples_shuffled)
+        for i in sorted_BDM_tuples_shuffled:
             snacks_to_show.append(i[0])
             snacks_to_show.append(i[1])
 
@@ -193,3 +184,6 @@ class Player(BasePlayer):
     slider_value = models.StringField(widget=widgets.Slider())
     # welchen Snack der Teilnehmer gerade bewertet
     rated_snack = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    # Treatment variable
+    treatment = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+

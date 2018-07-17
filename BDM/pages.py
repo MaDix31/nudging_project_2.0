@@ -10,6 +10,7 @@ class Instructions(Page):
         # zeige Instruktionen nur zu  Beginn an
         return self.round_number == 1
 
+
 class TestRun(Page):
     def is_displayed(self):
         # zeige Testlauf nur zu Beginn an
@@ -21,6 +22,8 @@ class TestRun(Page):
         return {
             'image_path': 'img_snacks/' + str(test_image) + '.JPG'
         }
+
+
 
 '''
 auskommentiert: Kontrollfragen werden händisch gemacht
@@ -55,7 +58,7 @@ class BDM(Page):
         # left: wieviele Snacks noch bewertet werden müssen
         return {
             'image_path': 'img_snacks/' + str(Constants.list_snacks[self.participant.vars['num_snacks'][0]]) + '.JPG',
-            'p_label'   : self.participant.label,
+            'p_label'   : self.participant.label, # Wofür??
             'snack'     : str(Constants.list_snacks[self.participant.vars['num_snacks'][0]]),
             'left'      : len(Constants.list_snacks)-len(self.participant.vars['num_snacks'])
         }

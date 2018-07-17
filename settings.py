@@ -113,9 +113,9 @@ SESSION_CONFIG_DEFAULTS = {
 
 SESSION_CONFIGS = [
      {
-         'name': 'Nudge_Experiment',
-         'display_name': 'Nudging Experiment',
-         'num_demo_participants': 1,
+         'name': 'Nudge_Experiment_2',
+         'display_name': 'Nudging Experiment 2.0',
+         'num_demo_participants': 4,
          'app_sequence': ['BDM', 'Step2', 'Step3', 'BDM2'],
      }
 ]
