@@ -43,12 +43,11 @@ class Constants(BaseConstants):
 
     # Create list of all possible snack pairs:
     all_possible_pairs = itertools.combinations(list_snacks, 2)
-    print(all_possible_pairs)
     list_of_all_pairs = []
     for pair in all_possible_pairs:
         print(pair)
         list_of_all_pairs.append(pair)
-    print(list_of_all_pairs)
+    print('All possible pairs of snacks:', list_of_all_pairs)
     type(list_of_all_pairs)
 
 
@@ -99,14 +98,14 @@ class Subsession(BaseSubsession):
             num_trios =  num_players // 3 # This gives us the number of trios/stratas in which to randomise the three arms
             num_rest = num_players % 3 # This gives us the reminder, i.e. either one or two participants for which we randomise individually
             all_treats = Constants.treatments*num_trios # gives us a list of treatments for all trios/strata/buckets of three
-            print(all_treats)
+            print('We randomise the following treatments:', all_treats)
             for index in range(1,num_rest+1): # an index running from 1 to 1, or from 1 to 2 depending on the reminder participants
                 treat_rest = Constants.treatments[random.choice([0, 1, 2])] # randomise treatment individually
                 all_treats.append(treat_rest) # append individual treatment to treatment list
-                print(treat_rest)
-                print(all_treats)
+                print('We have',num_players, 'so that we have', num_trios, 'group of 3 and',num_rest, 'remaining participants for whom we individually randomise the treatments:', treat_rest)
+                print('Total randomisation list:', all_treats)
             random.shuffle(all_treats) # shuffle the full list of arms
-            print(all_treats)
+            print('Shuffled randomisation list:',all_treats)
 
             for i,p in enumerate(self.get_players()):
                 if p.round_number == 1:
@@ -142,6 +141,9 @@ class Subsession(BaseSubsession):
                     p.step3_list_of_pairs_to_show.append(random_pair)
 
                 p.participant.vars['step3_list_of_pairs_to_show'] = p.step3_list_of_pairs_to_show
+
+                print('List of pairs to show for participant',p.id,' is:',p.step2_list_of_pairs_to_show, ' and ',p.step3_list_of_pairs_to_show)
+
 
         for p in self.get_players():
             p.treatment = p.participant.vars['treatment']

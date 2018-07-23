@@ -15,8 +15,8 @@ class Instructions(Page):
 
 class Step3(Page):
     def vars_for_template(self):
-        snack1 = self.participant.vars["snacks_to_show_step3"][0]
-        snack2 = self.participant.vars["snacks_to_show_step3"][1]
+        snack1 = self.participant.vars["snacks_to_show_step3"][0][0]
+        snack2 = self.participant.vars["snacks_to_show_step3"][0][1]
 
         return {# Pfad zu den Bildern der Snacks
                 'image_path1': 'img_snacks/' + snack1 + '.JPG',
