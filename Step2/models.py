@@ -36,6 +36,7 @@ class Constants(BaseConstants):
         healthy_list.append(line.rstrip('\n'))
 
     default_ranking.close()
+    print(default_ranking)
 
 class Subsession(BaseSubsession):
     def creating_session(self):

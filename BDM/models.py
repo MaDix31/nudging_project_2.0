@@ -23,7 +23,8 @@ class Constants(BaseConstants):
     treatments = ['control','treat1','treat2']
 
     # Anzahl unterschiedlicher Snack-Bilder, basierend auf Dateien im Snackbilder-Ordner
-    num_snacks = len(os.listdir('_static//img_snacks'))
+    num_snacks = 2
+    #num_snacks = len(os.listdir('_static//img_snacks'))
     # Anzahl an Entscheidungen, die in Step 1 gefällt werden sollen = Anzahl Snacks gesamt
     num_rounds = num_snacks
 
@@ -132,6 +133,7 @@ class Player(BasePlayer):
 
     def sort_WTPs(self):
         # konvertiere BDM-dictionary in Liste von Tupel-Paaren: [(snack, WTP), (snack, WTP),...]
+        # Next step sorts tuples according to second item, which is the BDM value itself
         sorted_BDM_tuples = sorted(self.participant.vars['BDM'].items(), key=itemgetter(1))
         print(sorted_BDM_tuples)
         # drehe Liste um, damit absteigend nach WTPs geordnet ist
@@ -147,6 +149,7 @@ class Player(BasePlayer):
         for i in sorted_BDM_tuples_shuffled:
             snacks_to_show.append(i[0])
             snacks_to_show.append(i[1])
+        print(snacks_to_show)
 
         self.participant.vars["snacks_to_show"] = snacks_to_show
 
@@ -186,4 +189,6 @@ class Player(BasePlayer):
     rated_snack = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # Treatment variable
     treatment = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    # Snacks to show
+    snacks_to_show = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
 

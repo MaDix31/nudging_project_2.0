@@ -57,7 +57,7 @@ class Step2(Page):
             default = '-'
 
         # Treatment 1
-        if self.participant.vars['treatment'] == 'treatment_1':
+        if self.participant.vars['treatment'] == 'treat1':
             checked_or_not = ['checked="checked"', '']
             random.shuffle(checked_or_not)
             dependency1 = checked_or_not[0]
@@ -68,7 +68,7 @@ class Step2(Page):
                 default = snack1
 
         # Treatment 2
-        if self.participant.vars['treatment'] == 'treatment_2':
+        if self.participant.vars['treatment'] == 'treat2':
             dependency1 = self.player.set_healthier_as_default(snack1, snack2)
             dependency2 = self.player.set_healthier_as_default(snack2, snack1)
             if dependency1 == '':
