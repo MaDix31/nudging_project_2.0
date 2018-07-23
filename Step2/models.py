@@ -9,7 +9,7 @@ import operator
 import itertools
 
 
-author = 'Jörn Wieber'
+author = 'Jörn Wieber & Marius Dietsch'
 
 doc = """
 lets participant choose between 2 images the snack he/she prefers
@@ -19,7 +19,7 @@ lets participant choose between 2 images the snack he/she prefers
 class Constants(BaseConstants):
     name_in_url = 'Step2'
     players_per_group = None
-    num_rounds = 100
+    num_rounds = 3
     list_snacks = []
     for snack in os.listdir('_static//img_snacks'):
         if snack.endswith('.JPG'):
@@ -36,7 +36,7 @@ class Constants(BaseConstants):
         healthy_list.append(line.rstrip('\n'))
 
     default_ranking.close()
-    print(default_ranking)
+    print('The healthy list is:', healthy_list)
 
 class Subsession(BaseSubsession):
     def creating_session(self):
@@ -54,9 +54,8 @@ class Player(BasePlayer):
         self.participant.vars['step2_decisions'].append(self.decision)
 
     def delete_two_snacks(self):
-        if len(self.participant.vars["snacks_to_show"]) >= 2:
-            self.participant.vars["snacks_to_show"].pop(0)
-            self.participant.vars["snacks_to_show"].pop(0)
+        if len(self.participant.vars["step2_list_of_pairs_to_show"]) >= 2:
+            self.participant.vars["step2_list_of_pairs_to_show"].pop(0)
 
     def count_decisions(self):
         self.participant.vars['decision_count'] += 1
@@ -67,6 +66,7 @@ class Player(BasePlayer):
 
     def set_healthier_as_default(self, snack1, snack2):
         # TO DO: exception falls snack nicht in Liste ist (sollte eigentlich nicht passieren)
+        # The method index() returns the lowest index in list that obj appears. --> gives position of snack in that list
         if Constants.healthy_list.index(snack1) < Constants.healthy_list.index(snack2):
             return 'checked="checked"'
         else:

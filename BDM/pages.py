@@ -60,7 +60,8 @@ class BDM(Page):
             'image_path': 'img_snacks/' + str(Constants.list_snacks[self.participant.vars['num_snacks'][0]]) + '.JPG',
             'p_label'   : self.participant.label, # Wofür??
             'snack'     : str(Constants.list_snacks[self.participant.vars['num_snacks'][0]]),
-            'left'      : len(Constants.list_snacks)-len(self.participant.vars['num_snacks'])
+            'left'      : len(Constants.list_snacks)-len(self.participant.vars['num_snacks']),
+            'treatment': str(self.participant.vars['treatment'])
         }
 
     def before_next_page(self):
@@ -86,7 +87,7 @@ class End(Page):
         }
 
     def before_next_page(self):
-        self.player.sort_WTPs()
+        self.player.pick_pairs_to_show()
 
 
 page_sequence = [

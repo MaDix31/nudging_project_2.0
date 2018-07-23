@@ -8,7 +8,7 @@ from operator import itemgetter
 import itertools
 
 
-author = 'Jörn Wieber'
+author = 'Jörn Wieber & Marius Dietsch'
 
 doc = """
 shows participants pictures of snacks and asks for their willingness-to-pay
@@ -23,8 +23,8 @@ class Constants(BaseConstants):
     treatments = ['control','treat1','treat2']
 
     # Anzahl unterschiedlicher Snack-Bilder, basierend auf Dateien im Snackbilder-Ordner
-    num_snacks = 2
-    #num_snacks = len(os.listdir('_static//img_snacks'))
+    num_snacks = len(os.listdir('_static//img_snacks'))
+    num_snacks = len(os.listdir('_static//img_snacks'))
     # Anzahl an Entscheidungen, die in Step 1 gefällt werden sollen = Anzahl Snacks gesamt
     num_rounds = num_snacks
 
@@ -40,6 +40,21 @@ class Constants(BaseConstants):
     # da os.listdir u.U. "arbitrary" ordnet und Constants u.U. neu berechnet wird,
     # ist nicht gegeben, dass list_snacks immer gleich geordnet ist, daher:
     list_snacks.sort()
+
+    # Create list of all possible snack pairs:
+    all_possible_pairs = itertools.combinations(list_snacks, 2)
+    print(all_possible_pairs)
+    list_of_all_pairs = []
+    for pair in all_possible_pairs:
+        print(pair)
+        list_of_all_pairs.append(pair)
+    print(list_of_all_pairs)
+    type(list_of_all_pairs)
+
+
+    num_decisions_step2 = 3
+    num_decisions_step3 = 3
+
 
 
 class Subsession(BaseSubsession):
@@ -104,6 +119,33 @@ class Subsession(BaseSubsession):
                 p.participant.vars['treatment'] = p.treatment
 
 
+            # Now define the pairs that we want to show participants in step 2 and 3
+            # Idea: Taking a random subset of all possible pairs for each participant
+            for p in self.get_players():
+
+                p.step2_list_of_pairs_to_show = []
+                # Shuffling the list of all possible pairs
+                shuffled_all_possible_pairs_step2 = Constants.list_of_all_pairs.copy()
+                random.shuffle(shuffled_all_possible_pairs_step2)
+                # Now taking the first x pairs, i.e. the Number of decisions for step 2
+                for random_pair in shuffled_all_possible_pairs_step2[0:Constants.num_decisions_step2]:
+                    p.step2_list_of_pairs_to_show.append(random_pair)
+
+                p.participant.vars['step2_list_of_pairs_to_show'] = p.step2_list_of_pairs_to_show
+
+                p.step3_list_of_pairs_to_show = []
+                # Now doing the same for step 3 --> Taking another random subset
+                shuffled_all_possible_pairs_step3 = Constants.list_of_all_pairs.copy()
+                random.shuffle(shuffled_all_possible_pairs_step3)
+                # Now taking the first x pairs, i.e. the Number of decisions for step 2
+                for random_pair in shuffled_all_possible_pairs_step3[0:Constants.num_decisions_step3]:
+                    p.step3_list_of_pairs_to_show.append(random_pair)
+
+                p.participant.vars['step3_list_of_pairs_to_show'] = p.step3_list_of_pairs_to_show
+
+        for p in self.get_players():
+            p.treatment = p.participant.vars['treatment']
+
 class Group(BaseGroup):
     pass
 
@@ -117,7 +159,6 @@ class Player(BasePlayer):
 
 
     def fill_BDM_dict(self):
-        rated_snack = self.slider_value
         # key: abgefragter Snack
         # value: willingness-to-pay
         if self.slider_value == "":
@@ -131,28 +172,30 @@ class Player(BasePlayer):
             self.participant.vars['BDM'][Constants.list_snacks[self.participant.vars['num_snacks'][0]]] = self.slider_value
 
 
-    def sort_WTPs(self):
+    def pick_pairs_to_show(self):
+
+        '''
         # konvertiere BDM-dictionary in Liste von Tupel-Paaren: [(snack, WTP), (snack, WTP),...]
+        # The method items() returns a list of dict's (key, value) tuple pairs
         # Next step sorts tuples according to second item, which is the BDM value itself
         sorted_BDM_tuples = sorted(self.participant.vars['BDM'].items(), key=itemgetter(1))
         print(sorted_BDM_tuples)
+        print(type(sorted_BDM_tuples))
         # drehe Liste um, damit absteigend nach WTPs geordnet ist
         sorted_BDM_tuples.reverse()
-        BDM_length = len(sorted_BDM_tuples)
 
-
-        # Liste mit Snacks, um später davon die Pfade zu den Bildern zu bestimmen
+        # Liste mit Snacks (ohne BDM value), um später davon die Pfade zu den Bildern zu bestimmen
         snacks_to_show = []
         # zufällige Reihenfolge, um dem überproportionalen Erscheinen eines bestimmten Guts entgegenzuwirken
         sorted_BDM_tuples_shuffled = sorted_BDM_tuples.copy()
         random.shuffle(sorted_BDM_tuples_shuffled)
         for i in sorted_BDM_tuples_shuffled:
             snacks_to_show.append(i[0])
-            snacks_to_show.append(i[1])
-        print(snacks_to_show)
+
+        print('Snacks to show:', snacks_to_show)
+        print(type(snacks_to_show))
 
         self.participant.vars["snacks_to_show"] = snacks_to_show
-
 
         # ordne Snacks neu (zufällig) für Step 3:
         snacks_to_show_3 = list(set(snacks_to_show))
@@ -163,6 +206,11 @@ class Player(BasePlayer):
                 snacks_to_show_3.append(random_snack)
 
         self.participant.vars["snacks_to_show_step3"] = snacks_to_show_3
+        '''
+
+
+
+
 
 
 
@@ -189,6 +237,4 @@ class Player(BasePlayer):
     rated_snack = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # Treatment variable
     treatment = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
-    # Snacks to show
-    snacks_to_show = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
 

@@ -40,14 +40,16 @@ class Control2(Page):
     form_fields = ['control_4', 'control_5', 'control_6']
 '''
 
+
 class Step2(Page):
     def vars_for_template(self):
         # zufällige Reihenfolge der zwei Snacks
         # damit nicht immer der erste (=bessere) Snack default ist
         zero_one = [0, 1]
         random.shuffle(zero_one)
-        snack1 = self.participant.vars["snacks_to_show"][zero_one[0]]
-        snack2 = self.participant.vars["snacks_to_show"][zero_one[1]]
+        print('Snacks to show:', self.participant.vars["step2_list_of_pairs_to_show"])
+        snack1 = self.participant.vars["step2_list_of_pairs_to_show"][0][zero_one[0]]
+        snack2 = self.participant.vars["step2_list_of_pairs_to_show"][0][zero_one[1]]
 
         ### Fallunterscheidung basierend auf der zugehörigen Treatment-Gruppierung des Teilnehmers:
         # Control-Gruppe
@@ -57,6 +59,7 @@ class Step2(Page):
             default = '-'
 
         # Treatment 1
+        # Random default
         if self.participant.vars['treatment'] == 'treat1':
             checked_or_not = ['checked="checked"', '']
             random.shuffle(checked_or_not)
@@ -68,6 +71,7 @@ class Step2(Page):
                 default = snack1
 
         # Treatment 2
+        # Healthy snack is default
         if self.participant.vars['treatment'] == 'treat2':
             dependency1 = self.player.set_healthier_as_default(snack1, snack2)
             dependency2 = self.player.set_healthier_as_default(snack2, snack1)
@@ -106,7 +110,7 @@ class Step2(Page):
     form_model = 'player'
     form_fields = ['offer_1', 'offer_2', 'decision', 'treatment', 'default']
 
-class WaitPage(WaitPage):
+class WaitPageEnd(WaitPage):
     def is_displayed(self):
         # zeige Warte-Seite nur nach der letzten Runde an
         return self.round_number == Constants.num_rounds
@@ -125,6 +129,6 @@ class Results(Page):
 
 page_sequence = [
     Step2,
-    WaitPage,
+    WaitPageEnd,
     Results
 ]

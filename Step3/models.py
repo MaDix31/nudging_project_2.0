@@ -9,7 +9,7 @@ import operator
 import itertools
 
 
-author = 'Jörn Wieber'
+author = 'Jörn Wieber & Marius Dietsch'
 
 doc = """
 lets participant again choose between 2 images the snack he/she prefers (without default)
@@ -20,7 +20,7 @@ class Constants(BaseConstants):
     name_in_url = 'Step3'
     players_per_group = None
     # TO DO: Ändern in tatsächliche Anzahl an Vergleichsrunden
-    num_rounds = 100
+    num_rounds = 3
     list_snacks = []
     for snack in os.listdir('_static//img_snacks'):
         if snack.endswith('.JPG'):
