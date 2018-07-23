@@ -1,5 +1,7 @@
-# oTree_FFM
-a pilot experiment to test a possible switching from ztree to otree at the university of Frankfurt
+# Nudging project
+This is a pilot experiment to test a possible switching from ztree to otree at the university of Frankfurt.
+
+In this experiment we'll test for unintended consequences of the default option nudge.
 
 # useful hints
 - for implementation:
