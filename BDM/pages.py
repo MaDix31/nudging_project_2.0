@@ -38,11 +38,6 @@ class Control(Page):
                     'control_5', 'control_6', 'control_7']
 '''
 
-class WaitPage(WaitPage):
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
-    title_text = "Bitte warten."
-    body_text = "Es geht weiter, wenn alle Teilnehmer diese Stufe erreicht haben."
 
 class ControlPage(Page):
     # keine class WaitPage, damit es beim letzten User nicht automatisch weiter geht.
@@ -75,6 +70,12 @@ class BDM(Page):
     form_model = 'player'
     form_fields = ['p_label', 'slider_value', 'rated_snack']
 
+class EndWaitPage(WaitPage):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+    title_text = "Bitte warten."
+    body_text = "Es geht weiter, wenn alle Teilnehmer diese Stufe erreicht haben."
+
 
 class End(Page):
     def is_displayed(self):
@@ -95,6 +96,6 @@ page_sequence = [
     TestRun,
     ControlPage,
     BDM,
-    WaitPage,
+    EndWaitPage,
     End
 ]

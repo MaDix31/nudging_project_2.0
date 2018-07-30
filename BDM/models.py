@@ -16,6 +16,9 @@ shows participants pictures of snacks and asks for their willingness-to-pay
 
 
 class Constants(BaseConstants):
+    num_decisions_step2 = 3
+    num_decisions_step3 = 3
+
     name_in_url = 'Step1'
     players_per_group = None
 
@@ -51,8 +54,7 @@ class Constants(BaseConstants):
     type(list_of_all_pairs)
 
 
-    num_decisions_step2 = 3
-    num_decisions_step3 = 3
+
 
 
 
@@ -117,7 +119,7 @@ class Subsession(BaseSubsession):
             for p in self.get_players():
                 p.participant.vars['treatment'] = p.treatment
 
-
+            '''
             # Now define the pairs that we want to show participants in step 2 and 3
             # Idea: Taking a random subset of all possible pairs for each participant
             for p in self.get_players():
@@ -143,7 +145,7 @@ class Subsession(BaseSubsession):
                 p.participant.vars['step3_list_of_pairs_to_show'] = p.step3_list_of_pairs_to_show
 
                 print('List of pairs to show for participant',p.id,' is:',p.step2_list_of_pairs_to_show, ' and ',p.step3_list_of_pairs_to_show)
-
+            '''
 
         for p in self.get_players():
             p.treatment = p.participant.vars['treatment']
@@ -175,41 +177,29 @@ class Player(BasePlayer):
 
 
     def pick_pairs_to_show(self):
+        step2_list_of_pairs_to_show = []
+        # Shuffling the list of all possible pairs
+        shuffled_all_possible_pairs_step2 = Constants.list_of_all_pairs.copy()
+        random.shuffle(shuffled_all_possible_pairs_step2)
+        # Now taking the first x pairs, i.e. the Number of decisions for step 2
+        for random_pair in shuffled_all_possible_pairs_step2[0:Constants.num_decisions_step2]:
+            step2_list_of_pairs_to_show.append(random_pair)
 
-        '''
-        # konvertiere BDM-dictionary in Liste von Tupel-Paaren: [(snack, WTP), (snack, WTP),...]
-        # The method items() returns a list of dict's (key, value) tuple pairs
-        # Next step sorts tuples according to second item, which is the BDM value itself
-        sorted_BDM_tuples = sorted(self.participant.vars['BDM'].items(), key=itemgetter(1))
-        print(sorted_BDM_tuples)
-        print(type(sorted_BDM_tuples))
-        # drehe Liste um, damit absteigend nach WTPs geordnet ist
-        sorted_BDM_tuples.reverse()
+        self.participant.vars['step2_list_of_pairs_to_show'] = step2_list_of_pairs_to_show
 
-        # Liste mit Snacks (ohne BDM value), um später davon die Pfade zu den Bildern zu bestimmen
-        snacks_to_show = []
-        # zufällige Reihenfolge, um dem überproportionalen Erscheinen eines bestimmten Guts entgegenzuwirken
-        sorted_BDM_tuples_shuffled = sorted_BDM_tuples.copy()
-        random.shuffle(sorted_BDM_tuples_shuffled)
-        for i in sorted_BDM_tuples_shuffled:
-            snacks_to_show.append(i[0])
 
-        print('Snacks to show:', snacks_to_show)
-        print(type(snacks_to_show))
+        # Now doing the same for step 3 --> Taking another random subset
+        step3_list_of_pairs_to_show = []
+        shuffled_all_possible_pairs_step3 = Constants.list_of_all_pairs.copy()
+        random.shuffle(shuffled_all_possible_pairs_step3)
+        # Now taking the first x pairs, i.e. the Number of decisions for step 2
+        for random_pair in shuffled_all_possible_pairs_step3[0:Constants.num_decisions_step3]:
+            step3_list_of_pairs_to_show.append(random_pair)
 
-        self.participant.vars["snacks_to_show"] = snacks_to_show
+        self.participant.vars['step3_list_of_pairs_to_show'] = step3_list_of_pairs_to_show
 
-        # ordne Snacks neu (zufällig) für Step 3:
-        snacks_to_show_3 = list(set(snacks_to_show))
-        random.shuffle(snacks_to_show_3)
-        while len(snacks_to_show_3) < len(snacks_to_show):
-            random_snack = random.choice(snacks_to_show_3)
-            if random_snack != snacks_to_show_3[-1]:
-                snacks_to_show_3.append(random_snack)
-
-        self.participant.vars["snacks_to_show_step3"] = snacks_to_show_3
-        '''
-
+        print('List of pairs to show for participant', self.id, ' is:', step2_list_of_pairs_to_show, ' and ',
+              step3_list_of_pairs_to_show)
 
 
 
