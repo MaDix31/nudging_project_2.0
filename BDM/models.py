@@ -54,9 +54,6 @@ class Constants(BaseConstants):
         print(pair)
         list_of_all_pairs.append(pair)
     print('All possible pairs of snacks:', list_of_all_pairs)
-    type(list_of_all_pairs)
-
-
 
 
 
