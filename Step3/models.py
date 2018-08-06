@@ -46,7 +46,6 @@ class Player(BasePlayer):
     def delete_two_snacks(self):
         if len(self.participant.vars["snacks_to_show_step3"]) >= 2:
             self.participant.vars["snacks_to_show_step3"].pop(0)
-            self.participant.vars["snacks_to_show_step3"].pop(0)
 
     def count_decisions(self):
         self.participant.vars['decision_count'] += 1

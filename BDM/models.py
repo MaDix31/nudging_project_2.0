@@ -27,7 +27,6 @@ class Constants(BaseConstants):
 
     # Anzahl unterschiedlicher Snack-Bilder, basierend auf Dateien im Snackbilder-Ordner
     num_snacks = len(os.listdir('_static//img_snacks'))
-    num_snacks = len(os.listdir('_static//img_snacks'))
     # Anzahl an Entscheidungen, die in Step 1 gefällt werden sollen = Anzahl Snacks gesamt
     num_rounds = num_snacks
 
@@ -45,6 +44,10 @@ class Constants(BaseConstants):
     list_snacks.sort()
 
     # Create list of all possible snack pairs:
+    # Itertools.combinations(x, r) gives r-length tuples, in sorted order, no repeated elements
+    # Which essentially is the list of all possible pairs.
+    # Need to save the list, because itertools.combination gives a weird class type.
+    # Saving it with a for-loop so that it creates a list of tuple string pairs.
     all_possible_pairs = itertools.combinations(list_snacks, 2)
     list_of_all_pairs = []
     for pair in all_possible_pairs:
@@ -181,7 +184,9 @@ class Player(BasePlayer):
         # Shuffling the list of all possible pairs
         shuffled_all_possible_pairs_step2 = Constants.list_of_all_pairs.copy()
         random.shuffle(shuffled_all_possible_pairs_step2)
-        # Now taking the first x pairs, i.e. the Number of decisions for step 2
+        # Now taking the first x pairs of the list of all possible tuple pairs,
+        #   where x is number of decisions for step 2 that is defines in Constants.
+        # Remember, die index 0:2 goes 0,1 (excluding 2)
         for random_pair in shuffled_all_possible_pairs_step2[0:Constants.num_decisions_step2]:
             step2_list_of_pairs_to_show.append(random_pair)
 
@@ -198,8 +203,8 @@ class Player(BasePlayer):
 
         self.participant.vars['step3_list_of_pairs_to_show'] = step3_list_of_pairs_to_show
 
-        print('List of pairs to show for participant', self.id, ' is:', step2_list_of_pairs_to_show, ' and ',
-              step3_list_of_pairs_to_show)
+        print('List of pairs to show for participant ', self.id, ' is:', step2_list_of_pairs_to_show, 'in Step 2 and ',
+              step3_list_of_pairs_to_show, 'in Step 3')
 
 
 
