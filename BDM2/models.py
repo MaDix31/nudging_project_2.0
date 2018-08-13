@@ -20,6 +20,10 @@ class Constants(BaseConstants):
     # Anzahl unterschiedlicher Snack-Bilder, basierend auf Dateien im Snackbilder-Ordner
     num_snacks = len(os.listdir('_static//img_snacks'))
 
+
+    # Anzahl an Entscheidungen, die in Step 4 gefällt werden sollen = Anzahl Snacks gesamt
+    num_rounds = num_snacks
+
     # Liste der Snacks, basierend auf .jpg-Dateien im Snackbilder-Ordner
     list_snacks = []
     for snack in os.listdir('_static//img_snacks'):
@@ -31,8 +35,6 @@ class Constants(BaseConstants):
     # Bug-Fix, Erklärung siehe BDM-App:
     list_snacks.sort()
 
-    # Anzahl an Entscheidungen, die in Step 4 gefällt werden sollen = Anzahl Snacks gesamt
-    num_rounds = len(os.listdir('_static//img_snacks'))
 
 
 class Subsession(BaseSubsession):
@@ -74,23 +76,25 @@ class Player(BasePlayer):
     rand_price = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # Label des PCs
     p_label = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    # Ausgewähter snack
+    step_payout = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # ausgegebener Snack, falls WTP größer gleich zufälliger Preis
-    payout1 = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    payout1_snack = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # gesamte Geld-Auszahlung am Ende
-    payout2 = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    payout1_payoff = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # ausgegebener Snack, falls WTP größer gleich zufälliger Preis
-    payout3 = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    payout2_snack = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # gesamte Geld-Auszahlung am Ende
-    payout4 = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    payout2_payoff = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # ausgegebener Snack, falls WTP größer gleich zufälliger Preis
-    payout5 = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    payout3_snack = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # gesamte Geld-Auszahlung am Ende
-    payout6 = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    payout3_payoff = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # ausgegebener Snack, falls WTP größer gleich zufälliger Preis
-    payout7 = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    payout4_snack = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # gesamte Geld-Auszahlung am Ende
-    payout8 = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    payout4_payoff = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # ausgegebener Snack, falls WTP größer gleich zufälliger Preis
-    payout9 = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    payout5_snack = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # gesamte Geld-Auszahlung am Ende
-    payout10 = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
+    payout5_payoff = models.StringField(widget=widgets.HiddenInput(), verbose_name='')

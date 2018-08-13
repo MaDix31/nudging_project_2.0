@@ -44,8 +44,8 @@ class Player(BasePlayer):
         self.participant.vars['step3_decisions'].append(self.decision)
 
     def delete_two_snacks(self):
-        if len(self.participant.vars["snacks_to_show_step3"]) >= 2:
-            self.participant.vars["snacks_to_show_step3"].pop(0)
+        if len(self.participant.vars["step3_list_of_pairs_to_show"]) >= 2:
+            self.participant.vars["step3_list_of_pairs_to_show"].pop(0)
 
     def count_decisions(self):
         self.participant.vars['decision_count'] += 1

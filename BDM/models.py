@@ -48,6 +48,9 @@ class Constants(BaseConstants):
     # Which essentially is the list of all possible pairs.
     # Need to save the list, because itertools.combination gives a weird class type.
     # Saving it with a for-loop so that it creates a list of tuple string pairs.
+
+    # Wir haben 41 snacks. D.h. wir haben 820 mögliche Paare,
+    #   wenn 2 (ohne reihenfolge) aus 41 gezogen werden (ohne zurücklegen).
     all_possible_pairs = itertools.combinations(list_snacks, 2)
     list_of_all_pairs = []
     for pair in all_possible_pairs:
@@ -119,34 +122,6 @@ class Subsession(BaseSubsession):
             for p in self.get_players():
                 p.participant.vars['treatment'] = p.treatment
 
-            '''
-            # Now define the pairs that we want to show participants in step 2 and 3
-            # Idea: Taking a random subset of all possible pairs for each participant
-            for p in self.get_players():
-
-                p.step2_list_of_pairs_to_show = []
-                # Shuffling the list of all possible pairs
-                shuffled_all_possible_pairs_step2 = Constants.list_of_all_pairs.copy()
-                random.shuffle(shuffled_all_possible_pairs_step2)
-                # Now taking the first x pairs, i.e. the Number of decisions for step 2
-                for random_pair in shuffled_all_possible_pairs_step2[0:Constants.num_decisions_step2]:
-                    p.step2_list_of_pairs_to_show.append(random_pair)
-
-                p.participant.vars['step2_list_of_pairs_to_show'] = p.step2_list_of_pairs_to_show
-
-                p.step3_list_of_pairs_to_show = []
-                # Now doing the same for step 3 --> Taking another random subset
-                shuffled_all_possible_pairs_step3 = Constants.list_of_all_pairs.copy()
-                random.shuffle(shuffled_all_possible_pairs_step3)
-                # Now taking the first x pairs, i.e. the Number of decisions for step 2
-                for random_pair in shuffled_all_possible_pairs_step3[0:Constants.num_decisions_step3]:
-                    p.step3_list_of_pairs_to_show.append(random_pair)
-
-                p.participant.vars['step3_list_of_pairs_to_show'] = p.step3_list_of_pairs_to_show
-
-                print('List of pairs to show for participant',p.id,' is:',p.step2_list_of_pairs_to_show, ' and ',p.step3_list_of_pairs_to_show)
-            '''
-
         for p in self.get_players():
             p.treatment = p.participant.vars['treatment']
 
@@ -166,7 +141,8 @@ class Player(BasePlayer):
         # key: abgefragter Snack
         # value: willingness-to-pay
         if self.slider_value == "":
-
+            # Now define the pairs that we want to show participants in step 2 and 3
+            # Idea: Taking a random subset of all possible pairs for each participant
             # self.participant.vars['num_snacks'] sind indexzahlen, die von 0 bis zu num_snacks-1 läuft,
             # wobei bei jeder runde immer die erste Indexzahl weggenommen wird, sodass self.participant.vars['num_snacks'][0]
             # immer das nächste Gut ist. [Constants.list_snacks[self.participant.vars['num_snacks'][0]] gibt somit immer den Namen des nächsten Guts

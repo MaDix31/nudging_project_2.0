@@ -40,7 +40,7 @@ class Instructions(Page):
                 self.participant.vars['random_snack4'] = random.choice(self.participant.vars['step3_decisions'])
                 self.participant.vars['random_snack5'] = random.choice(self.participant.vars['step3_decisions'])
 
-            # Preis für den zufälligen Snack
+            # Zufälligen Preis für den zu bezahlenden Snack
             self.participant.vars['random_price'] = random.randrange(0, 50)/10
 
 
@@ -165,7 +165,7 @@ class Lastpage(Page):
         }
 
     form_model = 'player'
-    form_fields = [ 'rand_snack', 'rand_price', 'p_label', 'payout1', 'payout2', 'payout3',
+    form_fields = [ 'rand_snack', 'rand_price', 'p_label', 'step_payout', 'payout1', 'payout2', 'payout3',
                     'payout4', 'payout5', 'payout6', 'payout7', 'payout8', 'payout9', 'payout10']
 
 

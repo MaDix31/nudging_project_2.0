@@ -15,8 +15,13 @@ class Instructions(Page):
 
 class Step3(Page):
     def vars_for_template(self):
-        snack1 = self.participant.vars["step3_list_of_pairs_to_show"][0][0]
-        snack2 = self.participant.vars["step3_list_of_pairs_to_show"][0][1]
+        # zufällige Reihenfolge der zwei Snacks
+        # damit nicht immer der erste (=bessere) Snack default ist
+        zero_one = [0, 1]
+        random.shuffle(zero_one)
+        print('Snacks to show:', self.participant.vars["step3_list_of_pairs_to_show"])
+        snack1 = self.participant.vars["step3_list_of_pairs_to_show"][0][zero_one[0]]
+        snack2 = self.participant.vars["step3_list_of_pairs_to_show"][0][zero_one[1]]
 
         return {# Pfad zu den Bildern der Snacks
                 'image_path1': 'img_snacks/' + snack1 + '.JPG',
