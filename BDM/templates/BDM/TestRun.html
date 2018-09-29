@@ -134,10 +134,12 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 </style>
+<link href="{% static "css/General.css" %}" rel="stylesheet" />
 {% endblock %}
 
 
 {% block scripts %}
+<script src="{% static "js/RevealNextButtonOnSliderInteraction.js" %}"></script>
 <script>
 function showWTP(val) {
     document.getElementById("participant_wtp").innerHTML = val;
@@ -185,7 +187,7 @@ Eingaben auf dieser Seite sind nicht Teil des Experiments.
 <br />
 <br />
 <div>
-  <div class="nextbutton">
+  <div id="nextButton" class="nextbutton initiallyHidden">
     {% next_button %}
   </div>
 </div>
