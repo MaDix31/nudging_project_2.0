@@ -16,8 +16,8 @@ shows participants pictures of snacks and asks for their willingness-to-pay
 
 
 class Constants(BaseConstants):
-    num_decisions_step2 = 3
-    num_decisions_step3 = 3
+    num_decisions_step2 = 50
+    num_decisions_step3 = 50
 
     name_in_url = 'Step1'
     players_per_group = None
@@ -54,9 +54,9 @@ class Constants(BaseConstants):
     all_possible_pairs = itertools.combinations(list_snacks, 2)
     list_of_all_pairs = []
     for pair in all_possible_pairs:
-        print(pair)
+        # print(pair)
         list_of_all_pairs.append(pair)
-    print('All possible pairs of snacks:', list_of_all_pairs)
+    # print('All possible pairs of snacks:', list_of_all_pairs)
 
 
 
@@ -103,7 +103,7 @@ class Subsession(BaseSubsession):
             num_trios =  num_players // 3 # This gives us the number of trios/stratas in which to randomise the three arms
             num_rest = num_players % 3 # This gives us the reminder, i.e. either one or two participants for which we randomise individually
             all_treats = Constants.treatments*num_trios # gives us a list of treatments for all trios/strata/buckets of three
-            print('We randomise the following treatments:', all_treats)
+            # print('We randomise the following treatments:', all_treats)
             for index in range(1,num_rest+1): # an index running from 1 to 1, or from 1 to 2 depending on the reminder participants
                 treat_rest = Constants.treatments[random.choice([0, 1, 2])] # randomise treatment individually
                 all_treats.append(treat_rest) # append individual treatment to treatment list
@@ -176,8 +176,8 @@ class Player(BasePlayer):
 
         self.participant.vars['step3_list_of_pairs_to_show'] = step3_list_of_pairs_to_show
 
-        print('List of pairs to show for participant ', self.id, ' is:', step2_list_of_pairs_to_show, 'in Step 2 and ',
-              step3_list_of_pairs_to_show, 'in Step 3')
+        # print('List of pairs to show for participant ', self.id, ' is:', step2_list_of_pairs_to_show, 'in Step 2 and ',
+        #      step3_list_of_pairs_to_show, 'in Step 3')
 
 
 

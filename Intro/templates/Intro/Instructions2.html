@@ -2,7 +2,7 @@
 {% load staticfiles otree %}
 
 {% block title %}
-    Stufe 1: Kontrollfragen
+    Über das heutige Experiment
 {% endblock %}
 
 {% block content %}
@@ -11,14 +11,17 @@
 Documentation on how to write a django template here:
 https://docs.djangoproject.com/en/1.8/ref/templates/language/
 
-Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+Bootstrap comes pre-loaructioded, so you can use any Bootstrap elements:
 http://getbootstrap.com/components/
+
 -->
 
-Es geht weiter, wenn alle Teilnehmer die Kontrollfragen beantwortet haben und es keine Vertändnisfragen mehr gibt.
-
+<embed src="{% static instructions_path %}" width="800px" height="2100px" />
+<br />
+<br />
+<br />
 <br />
 
-
+    {% next_button %}
 
 {% endblock %}

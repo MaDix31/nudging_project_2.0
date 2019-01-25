@@ -1,0 +1,17 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Wie die snacks bewertet werden
+{% endblock %}
+
+{% block content %}
+
+<embed src="{% static instructions_path %}" />
+
+<br />
+<br />
+
+    {% next_button %}
+
+{% endblock %}
