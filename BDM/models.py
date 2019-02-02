@@ -87,7 +87,7 @@ class Subsession(BaseSubsession):
 
             # initialisiere BDM-Dictionary
             # erstellt ein zunächst leeres Dictionary, in das nach jeder Bewertung
-            # über Player.fill_BDM_dict() ein key-value-Paar eingetragen wird
+            # über self.player.fill_BDM_dict() ein key-value-Paar eingetragen wird
             # key: Snack
             # value: willingness-to-pay
             for p in self.get_players():
@@ -207,4 +207,3 @@ class Player(BasePlayer):
     rated_snack = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
     # Treatment variable
     treatment = models.StringField(widget=widgets.HiddenInput(), verbose_name='')
-
