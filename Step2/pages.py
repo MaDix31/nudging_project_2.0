@@ -47,7 +47,6 @@ class Step2(Page):
         # damit nicht immer der erste (=bessere) Snack default ist
         zero_one = [0, 1]
         random.shuffle(zero_one)
-        print('Snacks to show:', self.participant.vars["step2_list_of_pairs_to_show"])
         snack1 = self.participant.vars["step2_list_of_pairs_to_show"][0][zero_one[0]]
         snack2 = self.participant.vars["step2_list_of_pairs_to_show"][0][zero_one[1]]
 

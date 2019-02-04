@@ -85,54 +85,44 @@ class Lastpage(Page):
                 try:
                     participant_WTP = float(self.participant.vars['BDM'][self.participant.vars['random_snack']])
                 except KeyError:
-                    print("########### A KeyError has occured for snack1 Step 1!")
                     participant_WTP = 0
                 try:
                     participant_WTP2 = float(self.participant.vars['BDM'][self.participant.vars['random_snack2']])
                 except KeyError:
-                    print("########### A KeyError has occured for snack2 Step 1!")
                     participant_WTP2 = 0
                 try:
                     participant_WTP3 = float(self.participant.vars['BDM'][self.participant.vars['random_snack3']])
                 except KeyError:
-                    print("########### A KeyError has occured for snack3 Step 1!")
                     participant_WTP3 = 0
                 try:
                     participant_WTP4 = float(self.participant.vars['BDM'][self.participant.vars['random_snack4']])
                 except KeyError:
-                    print("########### A KeyError has occured for snack4 Step 1!")
                     participant_WTP4 = 0
                 try:
                     participant_WTP5 = float(self.participant.vars['BDM'][self.participant.vars['random_snack5']])
                 except KeyError:
-                    print("########### A KeyError has occured for snack5 Step 1!")
                     participant_WTP5 = 0
             if step_payoff == 4:
                 # this is to avoid a non-repeatable key error in a pilot session
                 try:
                     participant_WTP = float(self.participant.vars['WTPs_step_4'][self.participant.vars['random_snack']])
                 except KeyError:
-                    print("########### A KeyError has occured for snack1 Step 4!")
                     participant_WTP = 0
                 try:
                     participant_WTP2 = float(self.participant.vars['WTPs_step_4'][self.participant.vars['random_snack2']])
                 except KeyError:
-                    print("########### A KeyError has occured for snack2 Step 4!")
                     participant_WTP2 = 0
                 try:
                     participant_WTP3 = float(self.participant.vars['WTPs_step_4'][self.participant.vars['random_snack3']])
                 except KeyError:
-                    print("########### A KeyError has occured for snack3 Step 4!")
                     participant_WTP3 = 0
                 try:
                     participant_WTP4 = float(self.participant.vars['WTPs_step_4'][self.participant.vars['random_snack4']])
                 except KeyError:
-                    print("########### A KeyError has occured for snack4 Step 4!")
                     participant_WTP4 = 0
                 try:
                     participant_WTP5 = float(self.participant.vars['WTPs_step_4'][self.participant.vars['random_snack5']])
                 except KeyError:
-                    print("########### A KeyError has occured for snack5 Step 4!")
                     participant_WTP5 = 0
 
 
